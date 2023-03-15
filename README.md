@@ -18,6 +18,7 @@ APOM works by rotating a sequence of images based on the minutes of the current 
 ## Instructions
 
 1. Download and unzip this Github repo under your website directory.
+   https://github.com/meltaxa/apom/archive/refs/heads/main.zip
 
 2. Copy your astro pics to the images directory.
 
