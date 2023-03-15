@@ -1,0 +1,92 @@
+<html>
+<!--
+  Replace URL with your web site location.
+-->
+<head>
+    <title>Astronomy Picture of the Minute</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/png"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <section>
+        <center>
+        <b><div id="minute"></div></b>
+        by Dennis Mellican
+        </center>
+        </section>
+        <section>
+            <div class="frame">
+                <img src="https://URL/images/featured-astro.jpg?nocache" id="live-apom" alt="Featured Astro of the Minute">
+            </div>
+        </section>
+    </div>
+    <p>
+    <div id="text"></div>
+    <script type="text/javascript" charset="utf-8">
+        (function countdown(remaining) {
+            if(remaining === 0) {
+                // Load new image. The parameter forces CloudFlare for the non-cached object
+                var reimgapom
+                reimgapom=document.getElementById('live-apom')
+                reimgapom.src=reimgapom.src.replace(/\?.*/,function () {
+                    return '?'+new Date()
+                })
+
+                const uniq = Date.now();
+                const dt = new Date(uniq)
+                let minutes = dt.getMinutes();
+
+                // Load new image text. The parameter forces CloudFlare for the non-cached object
+                apom_caption("https://URL/images/featured-astro.txt?" + uniq);
+
+                // Replace the APOM title with the minutes ordinal
+                apom_title(uniq)
+
+                // Reset the timer
+                remaining = 10
+            }
+
+            if(remaining > 0) {
+                setTimeout(function(){ countdown(remaining - 1); }, 1000);
+            }
+
+        })(10);
+
+        function apom_caption(url) {
+            $('#text').load(url);
+        }
+
+        function apom_title(timestamp) {
+            const dt = new Date(timestamp)
+            let minutes = dt.getMinutes();
+            document.getElementById("minute").innerHTML = ordinal_suffix_of(minutes);
+        }
+
+        function ordinal_suffix_of(i) {
+            const apoth = "Astronomy Picture of the "
+            const m = " Minute";
+            var j = i % 10,
+                k = i % 100;
+            if (j == 1 && k != 11) {
+                return apoth + i + "st" + m;
+            }
+            if (j == 2 && k != 12) {
+                return apoth + i + "nd" + m;
+            }
+            if (j == 3 && k != 13) {
+                return apoth + i + "rd" + m;
+            }
+            return apoth + i + "th" + m;
+        }
+
+        // Initialise on start
+        window.onload = function() {
+            const uniq = Date.now();
+            apom_caption("https://URL/images/featured-astro.txt?" + uniq);
+            apom_title(uniq);
+        }
+    </script>
+</body>
+</html>
