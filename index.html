@@ -1,7 +1,4 @@
 <html>
-<!--
-  Replace URL with your web site location.
--->
 <head>
     <title>Astronomy Picture of the Minute</title>
     <link rel="shortcut icon" href="favicon.png" type="image/png"/>
@@ -18,31 +15,38 @@
         </section>
         <section>
             <div class="frame">
-                <img src="https://URL/images/featured-astro.jpg?nocache" id="live-apom" alt="Featured Astro of the Minute">
+                <img src="images/00.jpg?nocache" id="live-apom" alt="Default Astronomy Picture of the Minute">
             </div>
         </section>
     </div>
     <p>
-    <div id="text"></div>
+    <div id="text">I need my space</div>
     <script type="text/javascript" charset="utf-8">
-        (function countdown(remaining) {
-            if(remaining === 0) {
-                // Load new image. The parameter forces CloudFlare for the non-cached object
-                var reimgapom
-                reimgapom=document.getElementById('live-apom')
-                reimgapom.src=reimgapom.src.replace(/\?.*/,function () {
-                    return '?'+new Date()
-                })
-
+        function change_apom() {
                 const uniq = Date.now();
                 const dt = new Date(uniq)
                 let minutes = dt.getMinutes();
 
-                // Load new image text. The parameter forces CloudFlare for the non-cached object
-                apom_caption("https://URL/images/featured-astro.txt?" + uniq);
+                // Load new image. The parameter forces CDNs for the non-cached object
+                var reimgapom
+                reimgapom=document.getElementById('live-apom')
+                const img_url = "images/" + minutes + ".jpg?" + uniq;
+                if (existsFile(img_url)) {
+                    reimgapom.src=img_url;
+                }
+
+                // Load new image text. The parameter forces CDNs for the non-cached object
+                const txt_url = "images/" + minutes + ".txt?" + uniq;
+                if (existsFile(txt_url)) {
+                    apom_caption(txt_url);
+                }
 
                 // Replace the APOM title with the minutes ordinal
                 apom_title(uniq)
+        }
+        (function countdown(remaining) {
+            if(remaining === 0) {
+                change_apom();
 
                 // Reset the timer
                 remaining = 10
@@ -64,6 +68,13 @@
             document.getElementById("minute").innerHTML = ordinal_suffix_of(minutes);
         }
 
+        function existsFile(url) {
+           var http = new XMLHttpRequest();
+           http.open('HEAD', url, false);
+           http.send();
+           return http.status!=404;
+        }
+
         function ordinal_suffix_of(i) {
             const apoth = "Astronomy Picture of the "
             const m = " Minute";
@@ -83,9 +94,7 @@
 
         // Initialise on start
         window.onload = function() {
-            const uniq = Date.now();
-            apom_caption("https://URL/images/featured-astro.txt?" + uniq);
-            apom_title(uniq);
+              change_apom();
         }
     </script>
 </body>

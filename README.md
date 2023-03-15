@@ -15,27 +15,21 @@ As seen on Dennis Mellican's APOM site: <a href="https://astro.mellican.com/apom
 
 APOM works by rotating a sequence of images based on the minutes of the current time.
 
-## Pre-requisites and Instructions
+## Instructions
 
-1. Linux OS. The BASH script really should be converted to Python or better incorporated in the javascript 
-   for a more agnostic approach. Submit a PR if you make this work on other platforms.
+1. Download and unzip this Github repo under your website directory.
 
-2. A running webserver that the BASH script has access to copy images to.
+2. Copy your astro pics to the images directory.
 
-3. A directory of images with a numbered sequence suffix. For example:
-    ```01-image_of_Orion.jpg
-       02-image_of_M83.jpg
-       05-image_of_Pleiades.jpg
+3. Rename the pics in sequence. For example:
+    ```00.jpg
+       01.jpg
+       05.jpg
     ```
-    Note: You can skip a sequence. In the above example, image 02 would display for 3 minutes.
+    A 00.jpg is provided as a default. 
+    Note: You can skip a sequence. In the above example, image 01 would display for 4 minutes.
 
 4. Optional: A text file to accompany the image file that contains a caption. For example:
-    ```01-image_of_Orion.txt
-       05-image_of_Pleiades.txt
+    ```01.txt
+       05.txt
     ```
-
-5. Edit the BASH script and replace the path to the images.
-
-6. Per the BASH script, create the appropriate cronjob.
-
-7. Edit the index.html and replace the URL string with your website containing the images.
