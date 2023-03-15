@@ -8,8 +8,7 @@ As seen on Dennis Mellican's APOM site: <a href="https://astro.mellican.com/apom
   <!--- 
   Github will by default use it's Camo CDN to cache images (https://github.blog/2014-01-28-proxying-user-images/). 
   To override this, on the origin web server add the header Cache-Control no-cache. Also if you are using 
-  Cloudflare set the Browser Cache TTL to respect existing headers. The solarspy-live.png image is a Puppeteer 
-  screenshot and updated every 5 minutes displaying the energy usage at Meltaxa's home.
+  Cloudflare set the Browser Cache TTL to respect existing headers.
   --->
   <img src="https://mellican.com/images/apom.png?github" width=70%>
 </p>
