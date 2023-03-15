@@ -10,7 +10,7 @@ As seen on Dennis Mellican's APOM site: <a href="https://astro.mellican.com/apom
   To override this, on the origin web server add the header Cache-Control no-cache. Also if you are using 
   Cloudflare set the Browser Cache TTL to respect existing headers.
   --->
-  <img src="https://mellican.com/images/apom.png?github" width=70%>
+  <img src="https://mellican.com/images/apom.png?github-v1" width=70%>
 </p>
 
 APOM works by rotating a sequence of images based on the minutes of the current time.
