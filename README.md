@@ -11,7 +11,7 @@ As seen on Dennis Mellican's APOM site: <a href="https://astro.mellican.com/apom
   Cloudflare set the Browser Cache TTL to respect existing headers. The solarspy-live.png image is a Puppeteer 
   screenshot and updated every 5 minutes displaying the energy usage at Meltaxa's home.
   --->
-  <img src="https://meltaxa.mellican.com/images/apom.png?github" width=70%>
+  <img src="https://mellican.com/images/apom.png?github" width=70%>
 </p>
 
 APOM works by rotating a sequence of images based on the minutes of the current time.
