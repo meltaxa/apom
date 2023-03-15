@@ -17,10 +17,10 @@ APOM works by rotating a sequence of images based on the minutes of the current 
 
 ## Pre-requisites and Instructions
 
-1. Linux OS. The BASH script really should be converted to Python for a more agnostic approach. 
-   Submit a PR if you make this work on other platforms.
+1. Linux OS. The BASH script really should be converted to Python or better incorporated in the javascript 
+   for a more agnostic approach. Submit a PR if you make this work on other platforms.
 
-2. A running webserver that the BASH script has access to copy images to..
+2. A running webserver that the BASH script has access to copy images to.
 
 3. A directory of images with a numbered sequence suffix. For example:
     ```01-image_of_Orion.jpg
@@ -36,4 +36,6 @@ APOM works by rotating a sequence of images based on the minutes of the current 
 
 5. Edit the BASH script and replace the path to the images.
 
-6. Edit the index.html and replace the URL string with your website containing the images.
+6. Per the BASH script, create the appropriate cronjob.
+
+7. Edit the index.html and replace the URL string with your website containing the images.
