@@ -18,6 +18,7 @@ My APOM works by rotating a sequence of images located under numbered images dir
 ## Instructions
 
 1. Download and unzip this Github repo under your website directory.
+   https://github.com/meltaxa/apom/archive/refs/heads/main.zip
 
 2. Copy your astro jpg files to the images directory.
    If you have more then 60 images, see the Usage section below for the max setting.
