@@ -31,9 +31,9 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         if (urlParams.has('mode')) {
-            var mode_params = urlParams.get('mode');
+            var mode_param = urlParams.get('mode');
         } else {
-            var mode_params = 'default';
+            var mode_param = 'default';
         }
         if (urlParams.has('image')) {
             var image_param = urlParams.get('image');
@@ -51,6 +51,19 @@
             var timer_param = 60;
         }
 
+        var img_url = "images/";
+
+        // Overrides for demo mode
+        if (window.location.href == "https://meltaxa.github.io/apom/") {
+            mode_param = "demo";
+        }
+        if (mode_param == "demo") {
+            timer_param = 10;
+            img_url = "https://astro.mellican.com/apom/images/";
+            mode_param = "random";
+            image_param = null;
+        }
+
         function change_apom() {
                 const uniq = Date.now();
                 let minutes = counter++;
@@ -61,23 +74,22 @@
                 // Load new image. The parameter forces CDNs for the non-cached object
                 var reimgapom
                 reimgapom=document.getElementById('live-apom')
-                let img_url = "images/";
-                if (mode_params == "random") {
+                if (mode_param == "random") {
                     minutes = Math.floor(Math.random() * max_param);
                 }
                 if (typeof image_param === 'undefined' || image_param === null) {
-                    img_url = img_url + minutes + ".jpg?" + uniq;
+                    img_src = img_url + minutes + ".jpg?" + uniq;
                 } else {
-                    img_url = img_url + image_param + "?" + uniq;
+                    img_src = img_url + image_param + "?" + uniq;
                 }
-                if (existsFile(img_url)) {
-                    reimgapom.src=img_url;
+                if (existsFile(img_src)) {
+                    reimgapom.src=img_src;
                 } else {
                     change_apom();
                 }
 
                 // Load new image caption. The parameter forces CDNs for the non-cached object
-                const caption_url = "images/" + minutes + ".txt?" + uniq;
+                const caption_url = img_url + minutes + ".txt?" + uniq;
                 if (existsFile(caption_url)) {
                     apom_caption(caption_url);
                 } else {
@@ -106,7 +118,7 @@
         }
 
         function apom_title() {
-            if (mode_params == "random") {
+            if (mode_param == "random") {
                 apoth = "My Random Astronomy Picture of the Moment"
             } else {
                 apoth = "My Astronomy Picture of the Moment"
