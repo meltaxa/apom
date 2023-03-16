@@ -129,13 +129,16 @@
 
         function existsFile(url) {
            var http = new XMLHttpRequest();
-           http.open("GET", url, true);
-           http.onloadend = function() {
-               if(http.status == 404) {
-                  return false;
-               } else {
-                  return true;
+           http.onreadystatechange = function () {
+               if (this.readyState == 4) {
+                   if (this.status == 404) {
+                       return false;
+                   }
                }
+           }
+           http.open('HEAD', url, false);
+           http.send();
+           return http.status!=404;                           
         }
 
         // Initialise on start
