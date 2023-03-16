@@ -3,7 +3,7 @@
     <title>My APOM</title>
     <link rel="shortcut icon" href="favicon.png" type="image/png"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?nocahce">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 </head>
 <body>
@@ -13,19 +13,19 @@
         <b><div id="moment"></div></b>
         <a href="?" title="Default home settings"><i class="fa-solid fa-house"></i></a>
         <a href="?mode=random" title="Random APOM"><i class="fa fa-random" aria-hidden="true"></i></a>
-        <a href="?image=00.jpg" title="Show static image"><i class="fa-regular fa-image"></i></a>
+        <a href="?image=0.jpg" title="Show static image"><i class="fa-regular fa-image"></i></a>
         <a href="?timer=10" title="10 second timer"><i class="fa-solid fa-hourglass-half"></i></a>
         <a href="https://github.com/meltaxa/apom" target="_blank" title="GitHub Source Code repository"><i class="fab fa-github"></i></a>
         </center>
         </section>
         <section>
             <div class="frame">
-                <img src="images/00.jpg?nocache" id="live-apom" alt="Default Astronomy Picture of the Moment">
+                <img src="" id="live-apom" alt="Default Astronomy Picture of the Moment">
             </div>
         </section>
     </div>
     <p>
-    <div id="text">I need my space</div>
+    <div id="caption"></div>
     <script type="text/javascript" charset="utf-8">
         var counter = 0;
         const queryString = window.location.search;
@@ -53,14 +53,9 @@
 
         function change_apom() {
                 const uniq = Date.now();
-                const dt = new Date(uniq)
-                //let minutes = dt.getMinutes();
                 let minutes = counter++;
                 if (counter == max_param) {
                    counter = 0;
-                }
-                if (minutes < 10) {
-                   minutes = "0" + minutes;
                 }
 
                 // Load new image. The parameter forces CDNs for the non-cached object
@@ -77,16 +72,20 @@
                 }
                 if (existsFile(img_url)) {
                     reimgapom.src=img_url;
+                } else {
+                    change_apom();
                 }
 
-                // Load new image text. The parameter forces CDNs for the non-cached object
-                const txt_url = "images/" + minutes + ".txt?" + uniq;
-                if (existsFile(txt_url)) {
-                    apom_caption(txt_url);
+                // Load new image caption. The parameter forces CDNs for the non-cached object
+                const caption_url = "images/" + minutes + ".txt?" + uniq;
+                if (existsFile(caption_url)) {
+                    apom_caption(caption_url);
+                } else {
+                    document.getElementById("caption").innerHTML = "";
                 }
 
                 // Replace the APOM title with the minutes ordinal
-                apom_title(uniq)
+                apom_title()
         }
         (function countdown(remaining) {
             if(remaining === 0) {
@@ -103,12 +102,10 @@
         })(timer_param);
 
         function apom_caption(url) {
-            $('#text').load(url);
+            $('#caption').load(url);
         }
 
-        function apom_title(timestamp) {
-            const dt = new Date(timestamp)
-            let minutes = dt.getMinutes();
+        function apom_title() {
             if (mode_params == "random") {
                 apoth = "My Random Astronomy Picture of the Moment"
             } else {
