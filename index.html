@@ -1,36 +1,80 @@
 <html>
 <head>
-    <title>Astronomy Picture of the Minute</title>
+    <title>My APOM</title>
     <link rel="shortcut icon" href="favicon.png" type="image/png"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 </head>
 <body>
     <div class="header">
         <section>
         <center>
-        <b><div id="minute"></div></b>
-        by Dennis Mellican
+        <b><div id="moment"></div></b>
+        <a href="?" title="Default home settings"><i class="fa-solid fa-house"></i></a>
+        <a href="?mode=random" title="Random APOM"><i class="fa fa-random" aria-hidden="true"></i></a>
+        <a href="?image=00.jpg" title="Show static image"><i class="fa-regular fa-image"></i></a>
+        <a href="?timer=10" title="10 second timer"><i class="fa-solid fa-hourglass-half"></i></a>
+        <a href="https://github.com/meltaxa/apom" target="_blank" title="GitHub Source Code repository"><i class="fab fa-github"></i></a>
         </center>
         </section>
         <section>
             <div class="frame">
-                <img src="images/00.jpg?nocache" id="live-apom" alt="Default Astronomy Picture of the Minute">
+                <img src="images/00.jpg?nocache" id="live-apom" alt="Default Astronomy Picture of the Moment">
             </div>
         </section>
     </div>
     <p>
     <div id="text">I need my space</div>
     <script type="text/javascript" charset="utf-8">
+        var counter = 0;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('mode')) {
+            var mode_params = urlParams.get('mode');
+        } else {
+            var mode_params = 'default';
+        }
+        if (urlParams.has('image')) {
+            var image_param = urlParams.get('image');
+        } else {
+            var image_param = null;
+        }
+        if (urlParams.has('max')) {
+            var max_param = urlParams.get('max');
+        } else {
+            var max_param = 60;
+        }
+        if (urlParams.has('timer')) {
+            var timer_param = urlParams.get('timer');
+        } else {
+            var timer_param = 60;
+        }
+
         function change_apom() {
                 const uniq = Date.now();
                 const dt = new Date(uniq)
-                let minutes = dt.getMinutes();
+                //let minutes = dt.getMinutes();
+                let minutes = counter++;
+                if (counter == max_param) {
+                   counter = 0;
+                }
+                if (minutes < 10) {
+                   minutes = "0" + minutes;
+                }
 
                 // Load new image. The parameter forces CDNs for the non-cached object
                 var reimgapom
                 reimgapom=document.getElementById('live-apom')
-                const img_url = "images/" + minutes + ".jpg?" + uniq;
+                let img_url = "images/";
+                if (mode_params == "random") {
+                    minutes = Math.floor(Math.random() * max_param);
+                }
+                if (typeof image_param === 'undefined' || image_param === null) {
+                    img_url = img_url + minutes + ".jpg?" + uniq;
+                } else {
+                    img_url = img_url + image_param + "?" + uniq;
+                }
                 if (existsFile(img_url)) {
                     reimgapom.src=img_url;
                 }
@@ -49,14 +93,14 @@
                 change_apom();
 
                 // Reset the timer
-                remaining = 10
+                remaining = timer_param;
             }
 
             if(remaining > 0) {
                 setTimeout(function(){ countdown(remaining - 1); }, 1000);
             }
 
-        })(10);
+        })(timer_param);
 
         function apom_caption(url) {
             $('#text').load(url);
@@ -65,7 +109,12 @@
         function apom_title(timestamp) {
             const dt = new Date(timestamp)
             let minutes = dt.getMinutes();
-            document.getElementById("minute").innerHTML = ordinal_suffix_of(minutes);
+            if (mode_params == "random") {
+                apoth = "My Random Astronomy Picture of the Moment"
+            } else {
+                apoth = "My Astronomy Picture of the Moment"
+            }
+            document.getElementById("moment").innerHTML = apoth;
         }
 
         function existsFile(url) {
@@ -73,23 +122,6 @@
            http.open('HEAD', url, false);
            http.send();
            return http.status!=404;
-        }
-
-        function ordinal_suffix_of(i) {
-            const apoth = "Astronomy Picture of the "
-            const m = " Minute";
-            var j = i % 10,
-                k = i % 100;
-            if (j == 1 && k != 11) {
-                return apoth + i + "st" + m;
-            }
-            if (j == 2 && k != 12) {
-                return apoth + i + "nd" + m;
-            }
-            if (j == 3 && k != 13) {
-                return apoth + i + "rd" + m;
-            }
-            return apoth + i + "th" + m;
         }
 
         // Initialise on start

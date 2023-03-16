@@ -1,17 +1,23 @@
-html {
-  background-image:linear-gradient(#E0FFFF, #FFFFE0);
-  height:100%;
+body {
+  background-image: linear-gradient(#E0FFFF, #FFFFE0);
+  height: 100%;
   font-family: ManropeWebV,sans-serif;
   -webkit-font-smoothing: antialiased;
+  color: #000;
+}
+
+a, a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 img {
   border:solid 2px;
-  border-bottom-color:#ffe;
-  border-left-color:#eed;
-  border-right-color:#eed;
-  border-top-color:#ccb;
-  max-height:100%;
+  border-bottom-color: #ffe;
+  border-left-color: #eed;
+  border-right-color: #eed;
+  border-top-color: #ccb;
+  max-height: 100%;
 }
 
 .frame {
