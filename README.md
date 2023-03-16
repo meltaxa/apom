@@ -34,8 +34,9 @@ My APOM works by rotating a sequence of images located under the images director
        9.jpg
        10.jpg
     
-    A 00.jpg is provided as a default. 
-    Note: You can skip a sequence. In the above example, image 01 would display for 4 minutes under default settings.
+    A 0.jpg is provided as a default. 
+    
+    Note: You can skip a sequence. In the above example, image 1.jpg would display for 4 minutes under default settings.
 
 4. Optional: A text file to accompany the image file that contains a caption. For example:
     
@@ -70,7 +71,8 @@ The same is true if you have less than 60 images, say only 17:
 
 The full list of parameter options:
     
-     mode=random      Selects a random jpg image from your images directory. Default is sequential from 00.jpg.
+     mode=random      Selects a random jpg image from your images directory. 
+                      Default mode is sequential from 0.jpg. Unset the mode parameter for the default.
      timer=<number>   Sets the countdown time in the number of seconds. Default is 60.
      image=<filename> Display the image from your images directory without cycling.
      max=<number>     Sets the limit of the image sequence to be cycled. Default is 60.
