@@ -56,8 +56,12 @@
         var img_url = "images/";
 
         // Overrides for demo mode
+        console.log(window.location.href);
         if (window.location.href == "https://apom.mellican.com/") {
             mode_param = "demo";
+        } else if (/apom.mellican.com/.test(window.location.href)) {
+            img_url = "https://astro.mellican.com/apom/images/";
+            max_param = 45;
         }
         if (mode_param == "demo") {
             timer_param = 10;
