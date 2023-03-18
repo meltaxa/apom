@@ -96,7 +96,7 @@
                 }
 
                 // Load new image caption. The parameter forces CDNs for the non-cached object
-                const caption_url = img_url.replace('jpg','txt');
+                const caption_url = img_src.replace('jpg','txt');
                 if (existsFile(caption_url)) {
                     apom_caption(caption_url);
                 } else {
