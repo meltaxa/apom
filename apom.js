@@ -25,7 +25,8 @@ if (urlParams.has('timer')) {
 var img_url = "images/";
 
 // Overrides for demo mode
-if (window.location.href == "https://apom.mellican.com/") {
+console.log(window.location.href);
+if (window.location.href == "https://apom.mellican.com") {
     mode_param = "demo";
 }
 if (mode_param == "demo") {
