@@ -1,26 +1,25 @@
 <html>
 <head>
     <title>My APOM</title>
-    <link rel="shortcut icon" href="https://astro.mellican.com/apom/favicon.png" type="image/png"/>
+    <link rel="shortcut icon" href="favicon.png" type="image/png"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="styles.css?nocahce">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';
-">
 </head>
 <body>
     <div class="header">
         <section>
         <center>
         <b><div id="moment"></div></b>
-        <a href="?" title="Default home settings"><i class="fa-solid fa-house"></i></a>
+        <a href="?home" title="Default home settings"><i class="fa-solid fa-house"></i></a>
         <a href="?mode=random" title="Random APOM"><i class="fa fa-random" aria-hidden="true"></i></a>
         <a href="?image=0.jpg" title="Show static image"><i class="fa-regular fa-image"></i></a>
         <a href="?timer=10" title="10 second timer"><i class="fa-solid fa-hourglass-half"></i></a>
         <a href="https://github.com/meltaxa/apom" target="_blank" title="GitHub Source Code repository"><i class="fab fa-github"></i></a>
+        <a href="?mode=nasa" title="NASA APOD"><i class="fa-solid fa-shuttle-space"></i></a>
         </center>
         </section>
-        <section>
+        <section id="media-section">
             <div class="frame">
                 <img src="" id="live-apom" alt="Default Astronomy Picture of the Moment">
             </div>
@@ -28,129 +27,7 @@
     </div>
     <p>
     <div id="caption"></div>
-    <script type="text/javascript" charset="utf-8">
-        var counter = 0;
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        if (urlParams.has('mode')) {
-            var mode_param = urlParams.get('mode');
-        } else {
-            var mode_param = 'default';
-        }
-        if (urlParams.has('image')) {
-            var image_param = urlParams.get('image');
-        } else {
-            var image_param = null;
-        }
-        if (urlParams.has('max')) {
-            var max_param = urlParams.get('max');
-        } else {
-            var max_param = 60;
-        }
-        if (urlParams.has('timer')) {
-            var timer_param = urlParams.get('timer');
-        } else {
-            var timer_param = 60;
-        }
-
-        var img_url = "images/";
-
-        // Overrides for demo mode
-        console.log(window.location.href);
-        if (window.location.href == "https://apom.mellican.com/") {
-            mode_param = "demo";
-        } else if (/apom.mellican.com/.test(window.location.href)) {
-            img_url = "https://astro.mellican.com/apom/images/";
-            max_param = 45;
-        }
-        if (mode_param == "demo") {
-            timer_param = 10;
-            img_url = "https://astro.mellican.com/apom/images/";
-            mode_param = "random";
-            max_param = 50;
-            image_param = null;
-        }
-
-        function change_apom() {
-                const uniq = Date.now();
-                let minutes = counter++;
-                if (counter == max_param) {
-                   counter = 0;
-                }
-
-                // Load new image. The parameter forces CDNs for the non-cached object
-                var reimgapom
-                reimgapom=document.getElementById('live-apom')
-                if (mode_param == "random") {
-                    minutes = Math.floor(Math.random() * max_param);
-                }
-                if (typeof image_param === 'undefined' || image_param === null) {
-                    img_src = img_url + minutes + ".jpg?" + uniq;
-                } else {
-                    img_src = img_url + image_param + "?" + uniq;
-                }
-                if (existsFile(img_src)) {
-                    reimgapom.src=img_src;
-                } else {
-                    change_apom();
-                }
-
-                // Load new image caption. The parameter forces CDNs for the non-cached object
-                const caption_url = img_src.replace('jpg','txt');
-                if (existsFile(caption_url)) {
-                    apom_caption(caption_url);
-                } else {
-                    document.getElementById("caption").innerHTML = "";
-                }
-
-                // Replace the APOM title with the minutes ordinal
-                apom_title()
-        }
-        (function countdown(remaining) {
-            if(remaining === 0) {
-                change_apom();
-
-                // Reset the timer
-                remaining = timer_param;
-            }
-
-            if(remaining > 0) {
-                setTimeout(function(){ countdown(remaining - 1); }, 1000);
-            }
-
-        })(timer_param);
-
-        function apom_caption(url) {
-            $('#caption').load(url);
-        }
-
-        function apom_title() {
-            if (mode_param == "random") {
-                apoth = "My Random Astronomy Picture of the Moment"
-            } else {
-                apoth = "My Astronomy Picture of the Moment"
-            }
-            document.getElementById("moment").innerHTML = apoth;
-        }
-
-        function existsFile(url) {
-           var http = new XMLHttpRequest();
-           http.onreadystatechange = function () {
-               if (this.readyState == 4) {
-                   if (this.status == 404) {
-                       return false;
-                   }
-               }
-           }
-           http.open('HEAD', url, false);
-           http.send();
-           return http.status!=404;                           
-        }
-
-        // Initialise on start
-        window.onload = function() {
-              change_apom();
-        }
-    </script>
+    <div id="copyright"></div>
+    <script src="apom.js"></script>
 </body>
 </html>

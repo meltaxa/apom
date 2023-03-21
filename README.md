@@ -73,6 +73,8 @@ The full list of parameter options:
     
      mode=random      Selects a random jpg image from your images directory. 
                       Default mode is sequential from 0.jpg. Unset the mode parameter for the default.
+     mode=nasa        Fetches the current NASA APOD. Timer is set for 24 hours. You will need a NASA API
+                      key from https://api.nasa.gov/. Then edit apom.js and replace DEMO_KEY.
      mode=demo        Special mode that has the following overrides: Images from 
                       astro.mellican.com/apom, randomness, 10s timer. This mode is automatically 
                       invoked when viewing directly from the Github pages site: https://apom.mellican.com/.
