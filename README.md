@@ -71,16 +71,20 @@ The same is true if you have less than 60 images, say only 17:
 
 The full list of parameter options:
     
+     image=<filename> Display the image from your images directory without cycling.
+     max=<number>     Sets the limit of the image sequence to be cycled. Default is 60.
      mode=random      Selects a random jpg image from your images directory. 
                       Default mode is sequential from 0.jpg. Unset the mode parameter for the default.
      mode=nasa        Fetches the current NASA APOD. Timer is set for 24 hours. You will need a NASA API
-                      key from https://api.nasa.gov/. Then edit apom.js and replace DEMO_KEY.
+                      key from https://api.nasa.gov/. Then either pass this as a nasakey parameter or 
+                      edit apom.js and replace the DEMO_KEY word.
      mode=demo        Special mode that has the following overrides: Images from 
                       astro.mellican.com/apom, randomness, 10s timer. This mode is automatically 
                       invoked when viewing directly from the Github pages site: https://apom.mellican.com/.
+     nasakey=<key>    Optional: Override the hardcoded DEMO_KEY with your NASA API Key.
+                      Note, the DEMO_KEY is public and has a very low rate limit. 
+                      A default NASA logo is displayed otherwise.
      timer=<number>   Sets the countdown time in the number of seconds. Default is 60.
-     image=<filename> Display the image from your images directory without cycling.
-     max=<number>     Sets the limit of the image sequence to be cycled. Default is 60.
 
 For multiple options, add the & character and the parameter option in the URL. For example, to randomly rotate images every 5 seconds:
 

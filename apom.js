@@ -21,6 +21,12 @@ if (urlParams.has('timer')) {
 } else {
     var timer_param = 60;
 }
+if (urlParams.has('nasakey')) {
+    var nasakey_param = urlParams.get('nasakey');
+} else {
+    // Replace DEMO_KEY with your https://api.nasa.gov/ key
+    var nasakey_param = "DEMO_KEY";
+}
 
 var img_url = "images/";
 
@@ -60,7 +66,7 @@ function change_apom() {
         img_src = img_url + image_param + "?" + uniq;
     }
     if (mode_param == "nasa") {
-        nasarequested();
+        nasarequested(nasakey_param);
     } else if (existsFile(img_src)) {
         reimgapom.src=img_src;
     } else {
@@ -121,10 +127,8 @@ function existsFile(url) {
     return http.status!=404;
 }
 
-function nasarequested(){
+function nasarequested(nasaKey){
     const baseUrl = 'https://api.nasa.gov/planetary/apod?api_key=';
-    // Replace DEMO_KEY with a https://api.nasa.gov/ key
-    const apiKey = "DEMO_KEY";
     const title = document.querySelector("#caption");
     const copyright = document.querySelector("#copyright");
     const mediaSection = document.querySelector("#media-section");
@@ -138,7 +142,7 @@ function nasarequested(){
 
     function fetchData(){
         try{
-            fetch(baseUrl+apiKey+newDate)
+            fetch(baseUrl+nasaKey+newDate)
             .then(response=> response.json())
             .then(json=>{
                 diplaydata(json)
@@ -178,7 +182,7 @@ function nasarequested(){
 
 window.onload = function() {
     if (mode_param == "nasa") {
-        nasarequested();
+        nasarequested(nasakey_param);
     } else {
         change_apom();
     }
